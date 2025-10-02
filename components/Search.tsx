@@ -1,18 +1,24 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import React from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useTransition } from 'react';
 import { SearchIcon, SpinnerIcon } from './ui/icons';
 
 export default function Search() {
-  const searching = false;
   const searchParams = useSearchParams();
   const q = searchParams.get('q') || '';
+  const router = useRouter();
+  const [searching, startTransition] = useTransition();
 
   return (
     <form role="search">
       <input
         defaultValue={q}
+        onChange={e => {
+          startTransition(() => {
+            router.push(`?q=${e.currentTarget.value}`);
+          });
+        }}
         className="w-full pl-8 outline-offset-1"
         aria-label="Search contacts"
         name="q"
