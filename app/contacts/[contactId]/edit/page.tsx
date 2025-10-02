@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import Skeleton from '@/components/ui/Skeleton';
 import ContactForm from './_components/ContactForm';
 
 type PageProps = {
@@ -10,7 +11,7 @@ type PageProps = {
 export default async function EditContactPage({ params }: PageProps) {
   const contactId = (await params).contactId;
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Skeleton />}>
       <ContactForm contactId={contactId} />;
     </Suspense>
   );
